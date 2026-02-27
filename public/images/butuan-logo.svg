@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Outer circle - city seal border -->
+  <circle cx="100" cy="100" r="95" fill="#1a5c2e" stroke="#c8a84e" stroke-width="4"/>
+  <circle cx="100" cy="100" r="85" fill="none" stroke="#c8a84e" stroke-width="2"/>
+
+  <!-- Inner circle - background -->
+  <circle cx="100" cy="100" r="80" fill="#2d7a3f"/>
+
+  <!-- Shield shape -->
+  <path d="M60 55 L100 45 L140 55 L140 115 Q140 145 100 160 Q60 145 60 115 Z" fill="#1a5c2e" stroke="#c8a84e" stroke-width="2"/>
+
+  <!-- Water/river waves at bottom of shield -->
+  <path d="M65 120 Q75 115 85 120 Q95 125 105 120 Q115 115 125 120 Q135 125 137 120" fill="none" stroke="#4da6ff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M65 128 Q75 123 85 128 Q95 133 105 128 Q115 123 125 128 Q135 133 137 128" fill="none" stroke="#4da6ff" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Sun rays -->
+  <circle cx="100" cy="75" r="12" fill="#FFD700"/>
+  <g fill="#FFD700">
+    <polygon points="100,55 97,62 103,62"/>
+    <polygon points="100,95 97,88 103,88"/>
+    <polygon points="80,75 87,72 87,78"/>
+    <polygon points="120,75 113,72 113,78"/>
+    <polygon points="86,61 91,66 88,69"/>
+    <polygon points="114,61 109,66 112,69"/>
+    <polygon points="86,89 91,84 88,81"/>
+    <polygon points="114,89 109,84 112,81"/>
+  </g>
+
+  <!-- Tree/nature symbol -->
+  <path d="M95 100 L100 85 L105 100 Z" fill="#2ecc71"/>
+  <path d="M93 107 L100 90 L107 107 Z" fill="#27ae60"/>
+  <rect x="98" y="107" width="4" height="8" fill="#8B4513"/>
+
+  <!-- Text around the circle -->
+  <defs>
+    <path id="topArc" d="M30,100 a70,70 0 0,1 140,0"/>
+    <path id="bottomArc" d="M170,100 a70,70 0 0,1 -140,0"/>
+  </defs>
+  <text font-family="serif" font-size="13" fill="#c8a84e" font-weight="bold" letter-spacing="3">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">CITY OF BUTUAN</textPath>
+  </text>
+  <text font-family="serif" font-size="11" fill="#c8a84e" font-weight="bold" letter-spacing="2">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">CARAGA REGION</textPath>
+  </text>
+</svg>

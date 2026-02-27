@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Corkboard background texture - pure CSS, no images */
+.corkboard-bg {
+    background-color: #c4956a;
+    background-image:
+        repeating-radial-gradient(circle at 17% 32%, rgba(0,0,0,0.04) 0px, transparent 1px),
+        repeating-radial-gradient(circle at 62% 12%, rgba(0,0,0,0.03) 0px, transparent 1px),
+        repeating-radial-gradient(circle at 83% 67%, rgba(0,0,0,0.04) 0px, transparent 1px),
+        radial-gradient(ellipse at 50% 50%, #d4a574 0%, #c4956a 40%, #b8845a 80%, #a0724d 100%);
+    background-size: 4px 4px, 5px 5px, 3px 3px, 100% 100%;
+}
+
+/* Wood nav texture */
+.wood-nav {
+    background: linear-gradient(
+        180deg,
+        #8B6914 0%,
+        #6b4423 5%,
+        #7a5638 20%,
+        #6b4423 40%,
+        #5c4029 60%,
+        #6b4423 80%,
+        #7a5638 95%,
+        #5c4029 100%
+    );
+}
+
+/* Paper note card styles */
+.paper-note {
+    background: linear-gradient(135deg, #fffef9 0%, #fff8dc 50%, #fdf6e3 100%);
+    position: relative;
+}
+
+.paper-note::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 27px,
+            rgba(200, 180, 150, 0.15) 27px,
+            rgba(200, 180, 150, 0.15) 28px
+        );
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+/* Push pin visual */
+.push-pin {
+    position: relative;
+}
+
+.push-pin::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 40% 35%, #ff6b6b, #e74c3c 50%, #c0392b);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 -1px 2px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.push-pin-blue::after {
+    background: radial-gradient(circle at 40% 35%, #5dade2, #3498db 50%, #2980b9);
+}
+
+.push-pin-green::after {
+    background: radial-gradient(circle at 40% 35%, #58d68d, #27ae60 50%, #1e8449);
+}
+
+.push-pin-yellow::after {
+    background: radial-gradient(circle at 40% 35%, #f7dc6f, #f39c12 50%, #d68910);
+}
+
+/* Tape visual effect */
+.tape-top {
+    position: relative;
+}
+
+.tape-top::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 70px;
+    height: 22px;
+    background: rgba(255, 255, 220, 0.6);
+    border: 1px solid rgba(200, 180, 100, 0.3);
+    z-index: 10;
+}
+
+/* Subtle card rotations */
+.note-rotate-1 { transform: rotate(-1.5deg); }
+.note-rotate-2 { transform: rotate(1deg); }
+.note-rotate-3 { transform: rotate(-0.5deg); }
+.note-rotate-4 { transform: rotate(1.5deg); }
+.note-rotate-5 { transform: rotate(-1deg); }
+.note-rotate-6 { transform: rotate(0.5deg); }
+
+.note-rotate-1:hover,
+.note-rotate-2:hover,
+.note-rotate-3:hover,
+.note-rotate-4:hover,
+.note-rotate-5:hover,
+.note-rotate-6:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+/* Cork frame border */
+.cork-frame {
+    border: 6px solid #6b4423;
+    box-shadow:
+        inset 0 0 10px rgba(0,0,0,0.2),
+        0 4px 12px rgba(0,0,0,0.3);
+}
