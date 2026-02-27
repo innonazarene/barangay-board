@@ -16,13 +16,14 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'    => ['required', 'string', 'max:255'],
-            'body'     => ['required', 'string'],
+            'title' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string'],
             'category' => ['required', 'string', new Enum(PostCategory::class)],
-            'location'  => ['nullable', 'string', 'max:255'],
-            'latitude'  => ['nullable', 'numeric', 'between:-90,90'],
+            'barangay_id' => ['required', 'exists:barangays,id'],
+            'location' => ['nullable', 'string', 'max:255'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'image'     => ['nullable', 'image', 'max:2048'],
+            'image' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

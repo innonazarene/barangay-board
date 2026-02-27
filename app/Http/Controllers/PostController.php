@@ -118,9 +118,8 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        // Auto-assign the authenticated user's barangay
+        // Assign the authenticated user's ID
         $data['user_id'] = $request->user()->id;
-        $data['barangay_id'] = $request->user()->barangay_id;
         $data['status'] = PostStatus::Open;
 
         // Handle image upload

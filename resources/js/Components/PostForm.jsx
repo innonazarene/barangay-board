@@ -8,11 +8,12 @@ import MapPicker from '@/Components/MapPicker';
 export default function PostForm({ post, barangays, categories }) {
     const isEditing = Boolean(post);
 
-    const { data, setData, post: submitPost, put, processing, errors, reset } =
+    const { data, setData, post: submitPost, processing, errors, reset, transform } =
         useForm({
             title: post?.title ?? '',
             body: post?.body ?? '',
             category: post?.category ?? '',
+            barangay_id: post?.barangay_id ?? '',
             location: post?.location ?? '',
             latitude: post?.latitude ?? '',
             longitude: post?.longitude ?? '',
@@ -23,7 +24,12 @@ export default function PostForm({ post, barangays, categories }) {
         e.preventDefault();
 
         if (isEditing) {
-            put(route('posts.update', post.id), {
+            transform((data) => ({
+                ...data,
+                _method: 'patch',
+            }));
+
+            submitPost(route('posts.update', post.id), {
                 onSuccess: () => reset('image'),
                 forceFormData: true,
             });
@@ -58,6 +64,30 @@ export default function PostForm({ post, barangays, categories }) {
                     required
                 />
                 <InputError message={errors.title} className="mt-2" />
+            </div>
+
+            {/* Barangay */}
+            <div>
+                <InputLabel htmlFor="barangay_id" value="Barangay" />
+                <select
+                    id="barangay_id"
+                    name="barangay_id"
+                    value={data.barangay_id}
+                    onChange={(e) => setData('barangay_id', e.target.value)}
+                    className="mt-1 block w-full rounded-lg border-gray-300 py-2 pl-3 pr-8 text-sm text-gray-700 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+                    required
+                >
+                    <option value="" disabled>
+                        Select a barangay
+                    </option>
+                    {Array.isArray(barangays) &&
+                        barangays.map((brgy) => (
+                            <option key={brgy.id} value={brgy.id}>
+                                {brgy.name}
+                            </option>
+                        ))}
+                </select>
+                <InputError message={errors.barangay_id} className="mt-2" />
             </div>
 
             {/* Category */}
@@ -190,8 +220,8 @@ export default function PostForm({ post, barangays, categories }) {
                             ? 'Saving…'
                             : 'Publishing…'
                         : isEditing
-                        ? 'Save Changes'
-                        : 'Publish Post'}
+                            ? 'Save Changes'
+                            : 'Publish Post'}
                 </PrimaryButton>
             </div>
         </form>
