@@ -1,6 +1,6 @@
 # Barangay Bulletin Board
 
-A community bulletin board web application for Butuan City barangays. Built with **Laravel**, **Inertia.js**, **React**, and **Tailwind CSS**, featuring a school bulletin board / corkboard visual theme.
+A community bulletin board web application for City barangays. Built with **Laravel**, **Inertia.js**, **React**, and **Tailwind CSS**, featuring a school bulletin board / corkboard visual theme.
 
 ---
 
