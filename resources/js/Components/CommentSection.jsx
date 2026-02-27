@@ -74,7 +74,7 @@ export default function CommentSection({ comments, postId, auth }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('posts.comments.store', postId), {
+        post(route('comments.store', postId), {
             preserveScroll: true,
             onSuccess: () => reset('body'),
         });

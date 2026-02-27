@@ -10,6 +10,7 @@ use App\Models\Barangay;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -41,7 +42,7 @@ class PostController extends Controller
             $search = $request->string('search')->toString();
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('body', 'like', "%{$search}%");
+                    ->orWhere('body', 'like', "%{$search}%");
             });
         }
 
@@ -50,10 +51,10 @@ class PostController extends Controller
 
         if ($sort === 'votes') {
             $query->orderByDesc('is_pinned')
-                  ->orderByDesc('votes_count');
+                ->orderByDesc('votes_count');
         } else {
             $query->orderByDesc('is_pinned')
-                  ->orderByDesc('created_at');
+                ->orderByDesc('created_at');
         }
 
         $posts = $query->paginate(15)->withQueryString();
@@ -73,10 +74,10 @@ class PostController extends Controller
         }
 
         return Inertia::render('Posts/Index', [
-            'posts'      => $posts,
-            'filters'    => $request->only('barangay_id', 'category', 'search', 'sort'),
-            'barangays'  => Barangay::orderBy('name')->get(),
-            'categories' => PostCategory::cases(),
+            'posts' => $posts,
+            'filters' => $request->only('barangay_id', 'category', 'search', 'sort'),
+            'barangays' => Barangay::orderBy('name')->get(),
+            'categories' => collect(PostCategory::cases())->map(fn($c) => ['value' => $c->value, 'label' => $c->label()]),
         ]);
     }
 
@@ -94,8 +95,8 @@ class PostController extends Controller
         $authUser = request()->user();
 
         return Inertia::render('Posts/Show', [
-            'post'          => $post,
-            'userHasVoted'  => $authUser ? $post->hasVoteFrom($authUser) : false,
+            'post' => $post,
+            'userHasVoted' => $authUser ? $post->hasVoteFrom($authUser) : false,
         ]);
     }
 
@@ -105,8 +106,8 @@ class PostController extends Controller
     public function create(): Response
     {
         return Inertia::render('Posts/Create', [
-            'barangays'  => Barangay::orderBy('name')->get(),
-            'categories' => PostCategory::cases(),
+            'barangays' => Barangay::orderBy('name')->get(),
+            'categories' => collect(PostCategory::cases())->map(fn($c) => ['value' => $c->value, 'label' => $c->label()]),
         ]);
     }
 
@@ -118,9 +119,9 @@ class PostController extends Controller
         $data = $request->validated();
 
         // Auto-assign the authenticated user's barangay
-        $data['user_id']     = $request->user()->id;
+        $data['user_id'] = $request->user()->id;
         $data['barangay_id'] = $request->user()->barangay_id;
-        $data['status']      = PostStatus::Open;
+        $data['status'] = PostStatus::Open;
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -138,12 +139,12 @@ class PostController extends Controller
      */
     public function edit(Post $post): Response
     {
-        $this->authorize('update', $post);
+        Gate::authorize('update', $post);
 
         return Inertia::render('Posts/Edit', [
-            'post'       => $post,
-            'barangays'  => Barangay::orderBy('name')->get(),
-            'categories' => PostCategory::cases(),
+            'post' => $post,
+            'barangays' => Barangay::orderBy('name')->get(),
+            'categories' => collect(PostCategory::cases())->map(fn($c) => ['value' => $c->value, 'label' => $c->label()]),
         ]);
     }
 
@@ -152,7 +153,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
-        $this->authorize('update', $post);
+        Gate::authorize('update', $post);
 
         $data = $request->validated();
 
@@ -179,7 +180,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post): RedirectResponse
     {
-        $this->authorize('delete', $post);
+        Gate::authorize('delete', $post);
 
         if ($post->image) {
             Storage::disk('public')->delete($post->image);
@@ -196,9 +197,9 @@ class PostController extends Controller
      */
     public function togglePin(Post $post): RedirectResponse
     {
-        $this->authorize('pin', $post);
+        Gate::authorize('pin', $post);
 
-        $post->update(['is_pinned' => ! $post->is_pinned]);
+        $post->update(['is_pinned' => !$post->is_pinned]);
 
         return redirect()->back()
             ->with('success', $post->is_pinned ? 'Post pinned.' : 'Post unpinned.');
@@ -209,7 +210,7 @@ class PostController extends Controller
      */
     public function updateStatus(Request $request, Post $post): RedirectResponse
     {
-        $this->authorize('updateStatus', $post);
+        Gate::authorize('updateStatus', $post);
 
         $validated = $request->validate([
             'status' => ['required', new \Illuminate\Validation\Rules\Enum(PostStatus::class)],

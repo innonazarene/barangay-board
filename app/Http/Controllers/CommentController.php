@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -20,7 +21,7 @@ class CommentController extends Controller
 
         $post->comments()->create([
             'user_id' => $request->user()->id,
-            'body'    => $validated['body'],
+            'body' => $validated['body'],
         ]);
 
         return redirect()->back()
@@ -32,7 +33,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment): RedirectResponse
     {
-        $this->authorize('delete', $comment);
+        Gate::authorize('delete', $comment);
 
         $comment->delete();
 

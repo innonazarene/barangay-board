@@ -77,11 +77,11 @@ export default function Show({ post, auth }) {
                     <article className="overflow-hidden rounded-lg paper-note shadow-paper push-pin pt-4">
                         {/* Post image */}
                         {post.image && (
-                            <div className="relative z-[5] aspect-video w-full overflow-hidden bg-cork-100">
+                            <div className="relative z-[5] w-full flex justify-center bg-cork-100 overflow-hidden border-b border-cork-200">
                                 <img
                                     src={`/storage/${post.image}`}
                                     alt={post.title}
-                                    className="h-full w-full object-cover"
+                                    className="max-h-[500px] w-auto object-contain"
                                 />
                             </div>
                         )}
@@ -249,11 +249,10 @@ export default function Show({ post, auth }) {
                                         {isAdmin && (
                                             <button
                                                 onClick={handlePinToggle}
-                                                className={`rounded-lg px-3 py-1.5 text-xs font-medium ring-1 focus:outline-none focus:ring-2 focus:ring-amber-400 ${
-                                                    post.is_pinned
+                                                className={`rounded-lg px-3 py-1.5 text-xs font-medium ring-1 focus:outline-none focus:ring-2 focus:ring-amber-400 ${post.is_pinned
                                                         ? 'bg-amber-100 text-amber-700 ring-amber-200 hover:bg-amber-200'
                                                         : 'bg-paper-100 text-cork-700 ring-cork-300 hover:bg-paper-200'
-                                                }`}
+                                                    }`}
                                             >
                                                 {post.is_pinned ? 'Unpin Post' : 'Pin Post'}
                                             </button>

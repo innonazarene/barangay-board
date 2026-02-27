@@ -4,6 +4,7 @@ import PostCard from '@/Components/PostCard';
 import BarangayFilter from '@/Components/BarangayFilter';
 import FilterBar from '@/Components/FilterBar';
 import BarangayMap from '@/Components/BarangayMap';
+import Dropdown from '@/Components/Dropdown';
 
 const CATEGORIES = [
     { value: 'announcement', label: 'Announcements' },
@@ -89,21 +90,67 @@ export default function Index({ posts, barangays, filters }) {
                             </div>
 
                             {auth?.user ? (
-                                <Link
-                                    href={route('posts.create')}
-                                    className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-paper-100 px-5 py-2.5 text-sm font-bold text-cork-800 shadow-paper transition hover:bg-white hover:shadow-paper-hover focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-cork-800"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                        className="h-4 w-4"
-                                        aria-hidden="true"
+                                <div className="flex items-center gap-3">
+                                    <Link
+                                        href={route('posts.create')}
+                                        className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-paper-100 px-5 py-2.5 text-sm font-bold text-cork-800 shadow-paper transition hover:bg-white hover:shadow-paper-hover focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-cork-800"
                                     >
-                                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                                    </svg>
-                                    Create Post
-                                </Link>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            className="h-4 w-4"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                        </svg>
+                                        <span className="hidden sm:inline">Create Post</span>
+                                        <span className="sm:hidden">Post</span>
+                                    </Link>
+
+                                    <Dropdown>
+                                        <Dropdown.Trigger>
+                                            <span className="inline-flex rounded-md">
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex items-center gap-2 rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-4 text-amber-100 transition duration-150 ease-in-out hover:text-white focus:outline-none"
+                                                >
+                                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-blue-600 text-sm font-bold text-white shadow-pin">
+                                                        {auth.user.name?.charAt(0)?.toUpperCase() ?? '?'}
+                                                    </div>
+                                                    <span className="hidden md:block">
+                                                        {auth.user.name}
+                                                    </span>
+                                                    <svg
+                                                        className="h-4 w-4 text-amber-300"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 20 20"
+                                                        fill="currentColor"
+                                                    >
+                                                        <path
+                                                            fillRule="evenodd"
+                                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                            clipRule="evenodd"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </Dropdown.Trigger>
+
+                                        <Dropdown.Content>
+                                            <Dropdown.Link href={route('profile.edit')}>
+                                                Profile
+                                            </Dropdown.Link>
+                                            <Dropdown.Link
+                                                href={route('logout')}
+                                                method="post"
+                                                as="button"
+                                            >
+                                                Log Out
+                                            </Dropdown.Link>
+                                        </Dropdown.Content>
+                                    </Dropdown>
+                                </div>
                             ) : (
                                 <div className="flex gap-2">
                                     <Link
